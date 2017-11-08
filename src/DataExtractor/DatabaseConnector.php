@@ -15,7 +15,7 @@ class DatabaseConnector
 	private $isConnected = false;
 
 	public function __construct($basePath) {
-		$this->basePath = $basePath;
+		$this->basePath = rtrim($basePath, '/');
 	}
 
 	public function connect() {
@@ -37,6 +37,7 @@ class DatabaseConnector
 
 		// v4
 		if (file_exists($this->basePath . '/vendor/silverstripe/framework/src/Core/CoreKernel.php')) {
+			$corePath = 'framework/src/Core/CoreKernel.php';
 
 			use SilverStripe\Control\HTTPApplication;
 			use SilverStripe\Control\HTTPRequest;
@@ -74,12 +75,14 @@ class DatabaseConnector
 		}
 		// v3
 		elseif (file_exists($this->basePath . '/framework/core/Core.php')) {
+			$corePath = 'framework/core/Core.php';
 			require_once($this->basePath . '/framework/core/Core.php');
 		// v2
 		} elseif (file_exists($this->basePath . '/sapphire/core/Core.php')) {
+			$corePath = 'sapphire/core/Core.php';
 			require_once($this->basePath . '/sapphire/core/Core.php');
 		} else {
-			throw new \LogicException("No framework/core/Core.php or sapphire/core/Core.php included in project.  Perhaps $this->basePath is not a SilverStripe project?");
+			throw new \LogicException("No $corePath included in project. Perhaps $this->basePath is not a SilverStripe project?");
 		}
 
 		// Connect to database
