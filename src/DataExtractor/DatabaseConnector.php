@@ -35,7 +35,8 @@ class DatabaseConnector
 			require_once $this->basePath . '/vendor/autoload.php';
 		}
 
-		if (file_exists($this->basePath . '/framework/core/Core.php')) {
+		if (file_exists($this->basePath . '/vendor/silverstripe/framework/src/Core/CoreKernel.php')) {
+		} elseif (file_exists($this->basePath . '/vendor/silverstripe/framework/src/Core/CoreKernel.php')) {
 			require_once($this->basePath . '/framework/core/Core.php');
 		} elseif (file_exists($this->basePath . '/sapphire/core/Core.php')) {
 			require_once($this->basePath . '/sapphire/core/Core.php');
