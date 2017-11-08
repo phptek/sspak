@@ -44,9 +44,9 @@ class DatabaseConnector
 
 			require_once(BASE_PATH. '/vendor/autoload.php');
 
-			if (!file_exists($autoloadPath = BASE_PATH. '/vendor/autoload.php')) {
-	    			exit;
-			}
+//			if (!file_exists($autoloadPath = BASE_PATH. '/vendor/autoload.php')) {
+//	    			exit;
+//			}
 
 			require_once $autoloadPath;
 
