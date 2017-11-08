@@ -35,8 +35,47 @@ class DatabaseConnector
 			require_once $this->basePath . '/vendor/autoload.php';
 		}
 
-		if (file_exists($this->basePath . '/framework/core/Core.php')) {
+		// v4
+		if (file_exists($this->basePath . '/vendor/silverstripe/framework/src/Core/CoreKernel.php')) {
+
+			use SilverStripe\Control\HTTPApplication;
+			use SilverStripe\Control\HTTPRequest;
+			use SilverStripe\Core\CoreKernel;
+
+			require_once(BASE_PATH. '/vendor/autoload.php');
+
+			if (!file_exists($autoloadPath = BASE_PATH. '/vendor/autoload.php')) {
+	    			exit;
+			}
+
+			require_once $autoloadPath;
+
+			// Mock request
+			$request = new HTTPRequest('GET', '/');
+			$request->setSession(new Session([])));
+			$kernel = new CoreKernel(BASE_PATH);
+			$app = new HTTPApplication($kernel);
+	
+			$app->execute($request, function (HTTPRequest $request) {
+				global $databaseConfig;
+				$output = [];
+
+				foreach($databaseConfig as $k => $v) {
+		    			$output['db_' . $k] = $v;
+				}
+
+				$output['assets_path'] = ASSETS_PATH;
+
+				echo serialize($output);
+				echo PHP_EOL;		
+			});
+
+			exit;
+		}
+		// v3
+		elseif (file_exists($this->basePath . '/framework/core/Core.php')) {
 			require_once($this->basePath . '/framework/core/Core.php');
+		// v2
 		} elseif (file_exists($this->basePath . '/sapphire/core/Core.php')) {
 			require_once($this->basePath . '/sapphire/core/Core.php');
 		} else {
