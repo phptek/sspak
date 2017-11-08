@@ -38,15 +38,30 @@ class DatabaseConnector
 		// v4
 		if (file_exists($this->basePath . '/vendor/silverstripe/framework/src/Core/CoreKernel.php')) {
 
+use SilverStripe\Control\HTTPApplication;
+use SilverStripe\Control\HTTPRequestBuilder;
+use SilverStripe\Core\CoreKernel;
+use SilverStripe\Core\Startup\ErrorControlChainMiddleware;
+
+require __DIR__ . '/vendor/autoload.php';
+
+// Build request and detect flush
+$request = HTTPRequestBuilder::createFromEnvironment();
+
+// Default application
+$kernel = new CoreKernel(BASE_PATH);
+$app = new HTTPApplication($kernel);
+$app->addMiddleware(new ErrorControlChainMiddleware($app));
+$response = $app->handle($request);
+$response->output();
+/*
 			use SilverStripe\Control\HTTPApplication;
 			use SilverStripe\Control\HTTPRequest;
 			use SilverStripe\Core\CoreKernel;
 
-			require_once(BASE_PATH. '/vendor/autoload.php');
-
-//			if (!file_exists($autoloadPath = BASE_PATH. '/vendor/autoload.php')) {
-//	    			exit;
-//			}
+			if (!file_exists($autoloadPath = BASE_PATH. '/vendor/autoload.php')) {
+	    			exit;
+			}
 
 			require_once $autoloadPath;
 
@@ -69,6 +84,7 @@ class DatabaseConnector
 				echo serialize($output);
 				echo PHP_EOL;		
 			});
+*/
 		}
 		// v3
 		elseif (file_exists($this->basePath . '/framework/core/Core.php')) {
