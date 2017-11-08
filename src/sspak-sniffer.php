@@ -29,10 +29,10 @@ if(file_exists(BASE_PATH.'/sapphire/core/Core.php')) {
 } else if(file_exists(BASE_PATH.'/framework/core/Core.php')) {
 	//SS 3.x
 	require_once(BASE_PATH. '/framework/core/Core.php');
-} else if(file_exists(BASE_PATH.'/framework/src/Core/Core.php')) {
+} else if(file_exists(BASE_PATH.'/vendor/silverstripe/framework/src/Core/CoreKernel.php')) {
 	//SS 4.x
 	require_once(BASE_PATH. '/vendor/autoload.php');
-	require_once(BASE_PATH. '/framework/src/Core/Core.php');
+	require_once(BASE_PATH. '/vendor/silverstripe/framework/src/Core/CoreKernel.php');
 } else {
 	echo "Couldn't locate framework's Core.php. Perhaps " . BASE_PATH . " is not a SilverStripe project?\n";
 	exit(2);

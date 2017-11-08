@@ -15,7 +15,7 @@ class DatabaseConnector
 	private $isConnected = false;
 
 	public function __construct($basePath) {
-		$this->basePath = rtrim($basePath, '/');
+		$this->basePath = $basePath;
 	}
 
 	public function connect() {
