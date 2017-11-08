@@ -37,7 +37,8 @@ class DatabaseConnector
 
 		// v4
 		if (file_exists($this->basePath . '/vendor/silverstripe/framework/src/Core/CoreKernel.php')) {
-
+			echo "Recognised a v4 system..." . PHP_EOL;
+	
 use SilverStripe\Control\HTTPApplication;
 use SilverStripe\Control\HTTPRequestBuilder;
 use SilverStripe\Core\CoreKernel;
@@ -88,11 +89,14 @@ $response->output();
 		}
 		// v3
 		elseif (file_exists($this->basePath . '/framework/core/Core.php')) {
+			echo "Recognised a v3 system..." . PHP_EOL;
 			require_once($this->basePath . '/framework/core/Core.php');
 		// v2
 		} elseif (file_exists($this->basePath . '/sapphire/core/Core.php')) {
+			echo "Recognised a v2 system..." . PHP_EOL;
 			require_once($this->basePath . '/sapphire/core/Core.php');
 		} else {
+			echo "No system recognised..." . PHP_EOL;
 			throw new \LogicException("No Core file included in project. Perhaps $this->basePath is not a SilverStripe project?");
 		}
 
