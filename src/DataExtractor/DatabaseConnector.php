@@ -39,23 +39,6 @@ class DatabaseConnector
 		if (file_exists($this->basePath . '/vendor/silverstripe/framework/src/Core/CoreKernel.php')) {
 			echo "Recognised a v4 system..." . PHP_EOL;
 	
-use SilverStripe\Control\HTTPApplication;
-use SilverStripe\Control\HTTPRequestBuilder;
-use SilverStripe\Core\CoreKernel;
-use SilverStripe\Core\Startup\ErrorControlChainMiddleware;
-
-require __DIR__ . '/vendor/autoload.php';
-
-// Build request and detect flush
-$request = HTTPRequestBuilder::createFromEnvironment();
-
-// Default application
-$kernel = new CoreKernel(BASE_PATH);
-$app = new HTTPApplication($kernel);
-$app->addMiddleware(new ErrorControlChainMiddleware($app));
-$response = $app->handle($request);
-$response->output();
-/*
 			use SilverStripe\Control\HTTPApplication;
 			use SilverStripe\Control\HTTPRequest;
 			use SilverStripe\Core\CoreKernel;
@@ -85,7 +68,6 @@ $response->output();
 				echo serialize($output);
 				echo PHP_EOL;		
 			});
-*/
 		}
 		// v3
 		elseif (file_exists($this->basePath . '/framework/core/Core.php')) {
